@@ -1,0 +1,195 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Social Media API's",
+    "version": "1.0.0",
+    "description": "API's for Social Media Application Server"
+  },
+  "servers": [
+    {
+      "url": "https://pear-important-blackbuck.cyclic.app"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register User",
+        "description": "Registering a User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": [
+                      "true"
+                    ]
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": [
+                      "true"
+                    ]
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": [
+                      "true"
+                    ]
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created a new User"
+          },
+          "400": {
+            "description": "Failed to register"
+          }
+        }
+      }
+    },
+    "/api/users/signin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logging User",
+        "description": "Sigining in a User",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": [
+                      "true"
+                    ]
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": [
+                      "true"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Incorrect Credentials"
+          },
+          "404": {
+            "description": "User Not Found"
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout",
+        "description": "Logging out a User",
+        "responses": {
+          "201": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/users/logout-all-devices": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout All",
+        "description": "Logging out a User from all devices",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/users/get-details/{userId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieve User",
+        "description": "Fetching details of User",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "minimum": 1
+            }
+          }
+        ],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
